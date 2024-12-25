@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import CommunityIcon from './icons/IconCommunity.vue'
+import router from '@/router'
 
 const products = ref([])
 const filter = ref('')
@@ -53,6 +54,10 @@ const sortBy = (field) => {
   }
 }
 
+const goToDetail = (id) => {
+  router.push(`/product/${id}`)
+}
+
 onMounted(fetchProducts)
 </script>
 
@@ -77,14 +82,18 @@ onMounted(fetchProducts)
         </tr>
       </thead>
       <tbody>
-        <tr v-for="product in filteredProducts" :key="product._id">
+        <tr v-for="product in filteredProducts" :key="product.id">
           <td>{{ product.productName ?? '--' }}</td>
           <td>{{ product.price ?? '--' }}</td>
           <td>{{ product.mbSpeed ?? '--' }}</td>
           <td>{{ product.gbData ?? '--' }}</td>
           <td>{{ product.productTypeName ?? '--' }}</td>
           <td>{{ product.numeracioTerminal ?? '--' }}</td>
-          <td><CommunityIcon /></td>
+          <td>
+            <button @click="goToDetail(product.id)" class="detail-button">
+              <CommunityIcon />
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>

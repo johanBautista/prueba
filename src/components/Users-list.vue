@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import CommunityIcon from './icons/IconCommunity.vue'
+import router from '@/router'
 
 const customers = ref([])
 const filter = ref('')
@@ -53,6 +54,10 @@ const sortBy = (field) => {
   }
 }
 
+const goToDetail = (id) => {
+  router.push(`/user/${id}`)
+}
+
 onMounted(fetchCustomers)
 </script>
 
@@ -77,12 +82,16 @@ onMounted(fetchCustomers)
         </tr>
       </thead>
       <tbody>
-        <tr v-for="customer in filteredCustomers" :key="customer._id">
+        <tr v-for="customer in filteredCustomers" :key="customer.id">
           <td>{{ customer.givenName }}</td>
           <td>{{ customer.familyName1 }}</td>
           <td>{{ customer.email }}</td>
           <td>{{ customer.phone }}</td>
-          <td><CommunityIcon /></td>
+          <td>
+            <button @click="goToDetail(customer.id)" class="detail-button">
+              <CommunityIcon />
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>

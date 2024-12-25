@@ -15,9 +15,19 @@ const router = createRouter({
       component: () => import('../views/UsersView.vue'),
     },
     {
+      path: '/user/:id',
+      name: 'user',
+      component: () => import('../views/UserIDView.vue'),
+    },
+    {
       path: '/products',
       name: 'products',
       component: () => import('../views/ProductsView.vue'),
+    },
+    {
+      path: '/product/:id',
+      name: 'product',
+      component: () => import('../views/ProductIDView.vue'),
     },
   ],
 })
