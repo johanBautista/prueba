@@ -1,22 +1,119 @@
 <script setup>
-import { reactive } from 'vue'
-const articles = reactive([
-  { title: 'Artículo 11', description: 'Descripción del artículo 1.' },
-  { title: 'Artículo 2', description: 'Descripción del artículo 2.' },
-  { title: 'Artículo 3', description: 'Descripción del artículo 3.' },
-  { title: 'Artículo 4', description: 'Descripción del artículo 4.' },
-  { title: 'Artículo 5', description: 'Descripción del artículo 5.' },
-])
+import { ref, computed, onMounted } from 'vue'
+import CommunityIcon from './icons/IconCommunity.vue'
+
+const products = ref([])
+const filter = ref('')
+const sortField = ref('')
+const sortDirection = ref('asc')
+const NoProductsService = ref(false)
+
+const fetchProducts = async () => {
+  try {
+    const response = await fetch('http://localhost:3000/products')
+    if (!response.ok) {
+      NoProductsService.value = true
+      throw new Error('Error al obtener los productos')
+    }
+    const data = await response.json()
+    products.value = data
+  } catch (error) {
+    console.error('Error al obtener los productos:', error)
+  }
+}
+
+const filteredProducts = computed(() => {
+  let filtered = products.value
+
+  if (filter.value) {
+    filtered = filtered.filter((product) =>
+      product.productName.toLowerCase().includes(filter.value.toLowerCase()),
+    )
+  }
+
+  if (sortField.value) {
+    filtered.sort((a, b) => {
+      const fieldA = a[sortField.value]
+      const fieldB = b[sortField.value]
+      if (fieldA < fieldB) return sortDirection.value === 'asc' ? -1 : 1
+      if (fieldA > fieldB) return sortDirection.value === 'asc' ? 1 : -1
+      return 0
+    })
+  }
+
+  return filtered
+})
+
+const sortBy = (field) => {
+  if (sortField.value === field) {
+    sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc'
+  } else {
+    sortField.value = field
+    sortDirection.value = 'asc'
+  }
+}
+
+onMounted(fetchProducts)
 </script>
 
 <template>
-  <div class="container">
+  <div v-if="NoProductsService">
+    <p>Lo sentimos! Actualmente no tenemos productos en venta.</p>
+  </div>
+  <div v-else class="container">
     <h1>Listado de Artículos</h1>
-    <div class="article-list">
-      <div class="article" v-for="(article, index) in articles" :key="index">
-        <h2>{{ article.title }}</h2>
-        <p>{{ article.description }}</p>
-      </div>
-    </div>
+    <input type="text" v-model="filter" placeholder="Filtrar por nombre" class="filter-input" />
+
+    <table class="product-table">
+      <thead>
+        <tr>
+          <th @click="sortBy('productName')">Nombre</th>
+          <th @click="sortBy('price')">Precio</th>
+          <th>Velocidad/MB</th>
+          <th>Capacidad/GB</th>
+          <th>Tipo</th>
+          <th># Terminal</th>
+          <th>Detalle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="product in filteredProducts" :key="product._id">
+          <td>{{ product.productName ?? '--' }}</td>
+          <td>{{ product.price ?? '--' }}</td>
+          <td>{{ product.mbSpeed ?? '--' }}</td>
+          <td>{{ product.gbData ?? '--' }}</td>
+          <td>{{ product.productTypeName ?? '--' }}</td>
+          <td>{{ product.numeracioTerminal ?? '--' }}</td>
+          <td><CommunityIcon /></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
+<style scoped>
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.product-table th,
+.product-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.product-table th {
+  cursor: pointer;
+  background-color: #f4f4f4;
+}
+
+.filter-input {
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+</style>

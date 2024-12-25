@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import CommunityIcon from './icons/IconCommunity.vue'
 
 const customers = ref([])
 const filter = ref('')
@@ -72,6 +73,7 @@ onMounted(fetchCustomers)
           <th @click="sortBy('familyName1')">Apellido</th>
           <th>Email</th>
           <th>Teléfono</th>
+          <th>Detalle</th>
         </tr>
       </thead>
       <tbody>
@@ -80,6 +82,7 @@ onMounted(fetchCustomers)
           <td>{{ customer.familyName1 }}</td>
           <td>{{ customer.email }}</td>
           <td>{{ customer.phone }}</td>
+          <td><CommunityIcon /></td>
         </tr>
       </tbody>
     </table>
