@@ -2,7 +2,6 @@
 import Users from '../components/Users-list.vue'
 </script>
 <template>
-  <h1>This is an users page</h1>
   <Users />
 </template>
 

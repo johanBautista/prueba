@@ -2,6 +2,7 @@
 import DocumentationIcon from './icons/IconDocumentation.vue'
 import EcosystemIcon from './icons/IconEcosystem.vue'
 import ToolingIcon from './icons/IconTooling.vue'
+import { RouterLink } from 'vue-router'
 </script>
 
 <template>
@@ -60,6 +61,7 @@ import ToolingIcon from './icons/IconTooling.vue'
 }
 
 .nav-list li a.router-link-active {
-  color: #007bff;
+  display: flex;
+  color: var(--color-accent);
 }
 </style>
