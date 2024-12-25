@@ -1,10 +1,14 @@
+<script setup>
+import Users from '../components/Users-list.vue'
+</script>
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <h1>This is an users page</h1>
+  <Users />
 </template>
 
 <style>
+/**
+
 @media (min-width: 1024px) {
   .about {
     min-height: 100vh;
@@ -12,4 +16,5 @@
     align-items: center;
   }
 }
+*/
 </style>
