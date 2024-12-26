@@ -8,7 +8,9 @@ const hasProductError = ref(false)
 
 const fetchProduct = async () => {
   try {
-    const response = await fetch(`http://localhost:3000/products/${route.params.id}`)
+    const response = await fetch(
+      `https://render-json-q3qu.onrender.com/products/${route.params.id}`,
+    )
     if (!response.ok) {
       hasProductError.value = true
       throw new Error('Error al obtener los datos del producto')

@@ -11,7 +11,7 @@ const NoCustomersService = ref(false)
 
 const fetchCustomers = async () => {
   try {
-    const response = await fetch('http://localhost:3000/customers')
+    const response = await fetch('https://render-json-q3qu.onrender.com/customers')
     if (!response.ok) {
       NoCustomersService.value = true
       throw new Error('Error al obtener los clientes')

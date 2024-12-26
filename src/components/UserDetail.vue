@@ -10,7 +10,9 @@ const isLoading = ref(true)
 
 const fetchCustomer = async () => {
   try {
-    const response = await fetch(`http://localhost:3000/customers/${route.params.id}`)
+    const response = await fetch(
+      `https://render-json-q3qu.onrender.com/customers/${route.params.id}`,
+    )
     if (!response.ok) {
       hasCustomerError.value = true
       throw new Error('Error al obtener los datos del cliente')
@@ -24,7 +26,7 @@ const fetchCustomer = async () => {
 
 const fetchProducts = async () => {
   try {
-    const response = await fetch('http://localhost:3000/products')
+    const response = await fetch('https://render-json-q3qu.onrender.com/products')
     if (!response.ok) {
       hasCustomerError.value = true
       throw new Error('Error al obtener los productos')

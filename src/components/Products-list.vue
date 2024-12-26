@@ -11,7 +11,7 @@ const NoProductsService = ref(false)
 
 const fetchProducts = async () => {
   try {
-    const response = await fetch('http://localhost:3000/products')
+    const response = await fetch('https://render-json-q3qu.onrender.com/products')
     if (!response.ok) {
       NoProductsService.value = true
       throw new Error('Error al obtener los productos')
