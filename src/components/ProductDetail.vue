@@ -29,7 +29,7 @@ onMounted(fetchProduct)
     <div v-if="product">
       <div class="user-info">
         <img alt="Telefonia logo" class="logo" src="@/assets/system.png" width="125" height="125" />
-        <div>
+        <div class="product-details">
           <p><strong>Nombre:</strong> {{ product.productName ?? '--' }}</p>
           <p><strong>Precio:</strong> {{ product.price ?? '--' }}</p>
           <p><strong>Velocidad/MB:</strong> {{ product.mbSpeed ?? '--' }}</p>
@@ -43,6 +43,10 @@ onMounted(fetchProduct)
 </template>
 
 <style>
+.product-details {
+  margin-left: 2rem;
+}
+
 strong {
   color: #000;
   font-weight: bold;

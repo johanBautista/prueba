@@ -75,7 +75,7 @@ onMounted(loadData)
             width="125"
             height="125"
           />
-          <div>
+          <div class="user-details">
             <p><strong>Nombre:</strong> {{ customer.givenName }}</p>
             <p><strong>Apellido:</strong> {{ customer.familyName1 }}</p>
             <p><strong>Email:</strong> {{ customer.email }}</p>
@@ -116,6 +116,11 @@ onMounted(loadData)
   align-items: center;
   margin: 20px;
 }
+
+.user-details {
+  margin-left: 2rem;
+}
+
 .user-products {
   margin: 20px;
 }

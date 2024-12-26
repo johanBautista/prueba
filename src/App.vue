@@ -11,7 +11,9 @@ import NavbarItem from './components/NavbarItem.vue'
     <main class="content">
       <router-view />
     </main>
-    <img alt="Telefonia logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <!--
+      <img alt="Telefonia logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    -->
   </div>
 </template>
 

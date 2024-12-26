@@ -4,5 +4,3 @@ import ProductDetail from '../components/ProductDetail.vue'
 <template>
   <ProductDetail />
 </template>
-
-<style></style>

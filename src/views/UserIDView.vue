@@ -4,5 +4,3 @@ import UserDetail from '../components/UserDetail.vue'
 <template>
   <UserDetail />
 </template>
-
-<style></style>

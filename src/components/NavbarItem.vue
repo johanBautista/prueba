@@ -9,59 +9,68 @@ import { RouterLink } from 'vue-router'
   <nav>
     <ul class="nav-list">
       <li>
-        <router-link to="/">
-          <span class="icon">
-            <DocumentationIcon />
-          </span>
-          Home
-        </router-link>
+        <span class="icon">
+          <DocumentationIcon />
+        </span>
+        <router-link to="/"> Home </router-link>
       </li>
       <li>
-        <router-link to="/products">
-          <span class="icon">
-            <ToolingIcon />
-          </span>
-          Productos</router-link
-        >
+        <span class="icon">
+          <ToolingIcon />
+        </span>
+        <router-link to="/products"> Productos</router-link>
       </li>
       <li>
-        <router-link to="/users">
-          <span class="icon">
-            <EcosystemIcon />
-          </span>
-
-          Usuarios</router-link
-        >
+        <span class="icon">
+          <EcosystemIcon />
+        </span>
+        <router-link to="/users"> Usuarios</router-link>
       </li>
     </ul>
   </nav>
 </template>
 
 <style>
+nav {
+  padding: 20px;
+}
+
 .nav-list {
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
 }
 
 .nav-list li {
-  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.icon {
-  width: 32px;
-  height: 32px;
-  color: var(--color-text);
+.nav-list .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
 }
 
-.nav-list li a {
+.nav-list a {
   text-decoration: none;
+  font-size: 16px;
   color: #333;
-  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-list a:hover {
+  color: var(--color-accent);
 }
 
 .nav-list li a.router-link-active {
-  display: flex;
   color: var(--color-accent);
 }
 </style>
