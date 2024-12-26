@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div class="logo">MiTelefonía</div>
+    <div class="logo">Mi Telefonía</div>
     <nav>
       <ul>
         <li><a href="#home">Inicio</a></li>
