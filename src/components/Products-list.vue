@@ -8,6 +8,7 @@ const filter = ref('')
 const sortField = ref('')
 const sortDirection = ref('asc')
 const NoProductsService = ref(false)
+const isLoading = ref(true)
 
 const fetchProducts = async () => {
   try {
@@ -20,6 +21,8 @@ const fetchProducts = async () => {
     products.value = data
   } catch (error) {
     console.error('Error al obtener los productos:', error)
+  } finally {
+    isLoading.value = false
   }
 }
 
@@ -67,36 +70,43 @@ onMounted(fetchProducts)
   </div>
   <div v-else class="container">
     <h1>Listado de Artículos</h1>
-    <input type="text" v-model="filter" placeholder="Filtrar por nombre" class="filter-input" />
 
-    <table class="product-table">
-      <thead>
-        <tr>
-          <th @click="sortBy('productName')">Nombre</th>
-          <th @click="sortBy('price')">Precio</th>
-          <th>Velocidad/MB</th>
-          <th>Capacidad/GB</th>
-          <th>Tipo</th>
-          <th># Terminal</th>
-          <th>Detalle</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="product in filteredProducts" :key="product.id">
-          <td>{{ product.productName ?? '--' }}</td>
-          <td>{{ product.price ?? '--' }}</td>
-          <td>{{ product.mbSpeed ?? '--' }}</td>
-          <td>{{ product.gbData ?? '--' }}</td>
-          <td>{{ product.productTypeName ?? '--' }}</td>
-          <td>{{ product.numeracioTerminal ?? '--' }}</td>
-          <td>
-            <button @click="goToDetail(product.id)" class="detail-button">
-              <CommunityIcon />
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div v-if="isLoading">
+      <p>Cargando productos...</p>
+      <div class="spinner"></div>
+    </div>
+
+    <div v-else>
+      <input type="text" v-model="filter" placeholder="Filtrar por nombre" class="filter-input" />
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th @click="sortBy('productName')">Nombre</th>
+            <th @click="sortBy('price')">Precio</th>
+            <th>Velocidad/MB</th>
+            <th>Capacidad/GB</th>
+            <th>Tipo</th>
+            <th># Terminal</th>
+            <th>Detalle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="product in filteredProducts" :key="product.id">
+            <td>{{ product.productName ?? '--' }}</td>
+            <td>{{ product.price ?? '--' }}</td>
+            <td>{{ product.mbSpeed ?? '--' }}</td>
+            <td>{{ product.gbData ?? '--' }}</td>
+            <td>{{ product.productTypeName ?? '--' }}</td>
+            <td>{{ product.numeracioTerminal ?? '--' }}</td>
+            <td>
+              <button @click="goToDetail(product.id)" class="detail-button">
+                <CommunityIcon />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 <style scoped>
@@ -124,5 +134,19 @@ onMounted(fetchProducts)
   width: 100%;
   max-width: 400px;
   box-sizing: border-box;
+}
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #34b65f;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

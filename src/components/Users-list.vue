@@ -8,6 +8,7 @@ const filter = ref('')
 const sortField = ref('')
 const sortDirection = ref('asc')
 const NoCustomersService = ref(false)
+const isLoading = ref(true)
 
 const fetchCustomers = async () => {
   try {
@@ -20,6 +21,8 @@ const fetchCustomers = async () => {
     customers.value = data
   } catch (error) {
     console.error('Error al obtener los clientes:', error)
+  } finally {
+    isLoading.value = false
   }
 }
 
@@ -69,32 +72,38 @@ onMounted(fetchCustomers)
   <div v-else class="container">
     <h1>Listado de Clientes</h1>
 
-    <input type="text" v-model="filter" placeholder="Filtrar por nombre" class="filter-input" />
+    <div v-if="isLoading">
+      <p>Cargando productos...</p>
+      <div class="spinner"></div>
+    </div>
 
-    <table class="customer-table">
-      <thead>
-        <tr>
-          <th @click="sortBy('givenName')">Nombre</th>
-          <th @click="sortBy('familyName1')">Apellido</th>
-          <th>Email</th>
-          <th>Teléfono</th>
-          <th>Detalle</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="customer in filteredCustomers" :key="customer.id">
-          <td>{{ customer.givenName }}</td>
-          <td>{{ customer.familyName1 }}</td>
-          <td>{{ customer.email }}</td>
-          <td>{{ customer.phone }}</td>
-          <td>
-            <button @click="goToDetail(customer.id)" class="detail-button">
-              <CommunityIcon />
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div v-else>
+      <input type="text" v-model="filter" placeholder="Filtrar por nombre" class="filter-input" />
+      <table class="customer-table">
+        <thead>
+          <tr>
+            <th @click="sortBy('givenName')">Nombre</th>
+            <th @click="sortBy('familyName1')">Apellido</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Detalle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="customer in filteredCustomers" :key="customer.id">
+            <td>{{ customer.givenName }}</td>
+            <td>{{ customer.familyName1 }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.phone }}</td>
+            <td>
+              <button @click="goToDetail(customer.id)" class="detail-button">
+                <CommunityIcon />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -123,5 +132,20 @@ onMounted(fetchCustomers)
   width: 100%;
   max-width: 400px;
   box-sizing: border-box;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #34b65f;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
