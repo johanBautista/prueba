@@ -21,6 +21,7 @@ const fetchCustomer = async () => {
     customer.value = data
   } catch (error) {
     console.error('Error al obtener el cliente:', error)
+    hasCustomerError.value = true
   }
 }
 
@@ -35,6 +36,7 @@ const fetchProducts = async () => {
     products.value = data
   } catch (error) {
     console.error('Error al obtener los productos:', error)
+    hasCustomerError.value = true
   }
 }
 

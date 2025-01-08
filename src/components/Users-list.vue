@@ -21,6 +21,7 @@ const fetchCustomers = async () => {
     customers.value = data
   } catch (error) {
     console.error('Error al obtener los clientes:', error)
+    NoCustomersService.value = true
   } finally {
     isLoading.value = false
   }
