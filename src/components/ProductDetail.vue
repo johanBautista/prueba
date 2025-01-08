@@ -29,7 +29,7 @@ onMounted(fetchProduct)
   <div v-else>
     <h1>Detalles del producto</h1>
     <div v-if="product">
-      <div class="user-info">
+      <div class="product-info">
         <img alt="Telefonia logo" class="logo" src="@/assets/system.png" width="125" height="125" />
         <div class="product-details">
           <p><strong>Nombre:</strong> {{ product.productName ?? '--' }}</p>
